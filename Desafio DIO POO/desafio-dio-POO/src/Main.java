@@ -1,28 +1,41 @@
-import br.com.dio.desafio.dominio.Bootcamp;
-import br.com.dio.desafio.dominio.Curso;
-import br.com.dio.desafio.dominio.Dev;
-import br.com.dio.desafio.dominio.Mentoria;
+import br.com.dio.desafio.dominio.*;
 
 import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
-        Curso curso1 = new Curso();
-        Curso curso2 = new Curso();
+        //Criado o Professor1
+        Professor professor1 = new Professor();
+        professor1.setNome("Professor Manoel");
 
+        //Criado o Professor2
+        Professor professor2 = new Professor();
+        professor2.setNome("Professor Carlos");
+
+        //Criado o Professor3
+        Professor professor3 = new Professor();
+        professor3.setNome("Professora Renata");
+
+        //Criado o curso1
+        Curso curso1 = new Curso();
         curso1.setTitulo("Curso Java");
         curso1.setDescricao("Curso de Java para iniciantes");
         curso1.setCargaHoraria(8);
+        curso1.setProfessor(professor1);
 
+        //Criado o curso2
+        Curso curso2 = new Curso();
         curso2.setTitulo("Curso JavaScript");
         curso2.setDescricao("Curso de JavaScript para iniciantes");
         curso2.setCargaHoraria(4);
+        curso2.setProfessor(professor2);
 
+        //Criado a mentoria1
         Mentoria mentoria1 = new Mentoria();
-
         mentoria1.setTitulo("Mentoria de Java");
         mentoria1.setDescricao("Descrição mentoria de Java");
         mentoria1.setData(LocalDate.now());
+        mentoria1.setProfessor(professor3);
 
         /*System.out.println(curso1);
         System.out.println(curso2);
