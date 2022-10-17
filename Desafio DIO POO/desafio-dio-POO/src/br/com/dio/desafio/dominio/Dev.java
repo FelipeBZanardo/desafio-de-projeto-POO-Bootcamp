@@ -1,15 +1,15 @@
 package br.com.dio.desafio.dominio;
 
-import java.util.LinkedHashSet;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
+import java.time.LocalDate;
+import java.util.*;
 
 public class Dev {
 
     private String nome;
     private Set<Conteudo> conteudosInscritos = new LinkedHashSet<>();       //Set não repete elementos. LinkedHashSet mantém a ordem
     private Set<Conteudo> conteudosConcluidos = new LinkedHashSet<>();
+
+    private Set<Certificado> certificados = new LinkedHashSet<>();
 
     public void inscreverBootcamp(Bootcamp bootcamp){
         this.conteudosInscritos.addAll(bootcamp.getConteudos());
@@ -20,6 +20,11 @@ public class Dev {
         Optional<Conteudo> conteudo =  this.conteudosInscritos.stream().findFirst();
         if(conteudo.isPresent()){
             this.conteudosConcluidos.add(conteudo.get());
+            Certificado certificado = new Certificado();
+            certificado.setConteudo(conteudo.get());
+            certificado.setDev(this);
+            certificado.setDataConclusao(LocalDate.now());
+            this.certificados.add(certificado);
             this.conteudosInscritos.remove(conteudo.get());
         } else {
             System.err.println("Você não está matriculado em nenhum conteúdo!");
@@ -28,6 +33,23 @@ public class Dev {
 
     public double calcularTotalXp() {
         return this.conteudosConcluidos.stream().mapToDouble(Conteudo::calcularXP).sum();
+    }
+
+    public void imprimirCertificado (){
+        if (!this.certificados.isEmpty()){
+            for (Certificado certificado : certificados){
+                System.out.println("***Certificado***");
+                System.out.println("Curso: " + certificado.getConteudo().getTitulo());
+                System.out.println("************************");
+                System.out.println("Aluno: " + certificado.getDev().getNome());
+                System.out.println("Professor responsável: " + certificado.getConteudo().getProfessor().getNome());
+                System.out.println("************************");
+                System.out.println("Data de conclusão: " + certificado.getDataConclusao());
+                System.out.println();
+            }
+        } else {
+            System.out.println("Não há certificados disponíveis");
+        }
     }
 
     public String getNome() {
@@ -52,6 +74,14 @@ public class Dev {
 
     public void setConteudosConcluidos(Set<Conteudo> conteudosConcluidos) {
         this.conteudosConcluidos = conteudosConcluidos;
+    }
+
+    public Set<Certificado> getCertificados() {
+        return certificados;
+    }
+
+    public void setCertificados(Set<Certificado> certificados) {
+        this.certificados = certificados;
     }
 
     @Override
